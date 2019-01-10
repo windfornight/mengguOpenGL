@@ -1,0 +1,33 @@
+一、使用深度缓冲区设置
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
+	glLoadIdentity();
+	gluLookAt(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f); //脑袋位置， 眼睛看的视点， 从头顶发出去的方向向量
+	glBegin(GL_QUADS);
+	glColor4ub(200, 50, 0, 255);
+	glVertex3f(-0.1f, -0.1f, -0.4f);
+	glVertex3f(0.1f, -0.1f, -0.4f);
+	glVertex3f(0.1f, 0.1f, -0.4f);
+	glVertex3f(-0.1f, 0.1f, -0.4f);
+	glColor4ub(0, 50, 200, 255);
+	glVertex3f(-0.1f, -0.1f, -0.6f);
+	glVertex3f(0.1f, -0.1f, -0.6f);
+	glVertex3f(0.1f, 0.1f, -0.6f);
+	glVertex3f(-0.1f, 0.1f, -0.6f);
+	glEnd();
+二、深度缓冲区清除的值是1.0
+
+三、显示列表
+	GLuint CreateDisplayList(std::function<void()> foo)
+	{
+		GLuint displayList = glGenLists(1);
+		glNewList(displayList, GL_COMPILE);
+		foo();
+		glEndList();
+		return displayList;
+	}
+	
+	mFastDrawCall = CreateDisplayList([this]()->void {DrawCommand(); });  //lambda表达式
+	
+	glCallList(mFastDrawCall);

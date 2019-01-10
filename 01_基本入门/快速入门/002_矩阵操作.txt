@@ -1,0 +1,80 @@
+一、基本操作：平移，旋转，缩放
+	//glLoadIdentity();  //重置当前矩阵为单位矩阵
+	//glTranslatef(0.0f, 0.0f, -2.5f);  //使所有物体坐标z轴移动-2.5个单位
+	//glRotatef(30.0f, 0.0f, 0.0f, 1.0f);  //使物体绕(0, 0, 1)旋转30度,局部坐标系的z轴,右手法则
+	//glLoadIdentity();
+	//glTranslatef(0.0f, 0.0f, -2.5f);
+	//glBegin(GL_TRIANGLES);
+	//glColor4ub(255, 0, 0, 255); glVertex3f(-0.5f, -0.25f, 0.0f);
+	//glColor4ub(0, 0, 255, 255); glVertex3f(0.5f, -0.25f, 0.0f);
+	//glColor4ub(0, 255, 0, 255); glVertex3f(0.0f, 0.5f, 0.0f);
+	//glEnd();
+
+	//缩放，所有坐标的缩放，其实例子三角形大小并没变化
+	//glLoadIdentity();
+	//glScalef(0.2f, 0.2f, 0.2f);
+	//glBegin(GL_TRIANGLES);
+	//glColor4ub(255, 0, 0, 255); glVertex3f(-0.5f, -0.25f, -5.0f);
+	//glColor4ub(0, 0, 255, 255); glVertex3f(0.5f, -0.25f, -5.0f);
+	//glColor4ub(0, 255, 0, 255); glVertex3f(0.0f, 0.5f, -5.0f);
+	//glLoadIdentity();
+	//glBegin(GL_TRIANGLES);
+	//glColor4ub(255, 0, 0, 255); glVertex3f(0.5f, -0.25f, -5.0f);
+	//glColor4ub(0, 0, 255, 255); glVertex3f(1.5f, -0.25f, -5.0f);
+	//glColor4ub(0, 255, 0, 255); glVertex3f(1.0f, 0.5f, -5.0f);
+	//glEnd();
+
+
+二、矩阵圧栈和弹栈
+	//glLoadIdentity();
+	//glPushMatrix();
+	//glTranslated(-1.0f, 0.0f, 0.0f);
+	//glBegin(GL_TRIANGLES);
+	//glColor4ub(255, 0, 0, 255); glVertex3f(-0.5f, -0.25f, -5.0f);
+	//glColor4ub(0, 0, 255, 255); glVertex3f(0.5f, -0.25f, -5.0f);
+	//glColor4ub(0, 255, 0, 255); glVertex3f(0.0f, 0.5f, -5.0f);
+	//glEnd();
+	//glPopMatrix();
+	//
+	//glPushMatrix();
+	//glTranslated(1.0f, 0.0f, 0.0f);
+	//glBegin(GL_TRIANGLES);
+	//glColor4ub(255, 0, 0, 255); glVertex3f(-0.5f, -0.25f, -5.0f);
+	//glColor4ub(0, 0, 255, 255); glVertex3f(0.5f, -0.25f, -5.0f);
+	//glColor4ub(0, 255, 0, 255); glVertex3f(0.0f, 0.5f, -5.0f);
+	//glEnd();
+	//glPopMatrix();
+	
+三、矩阵复合运算
+	glLoadIdentity();
+	glPushMatrix();
+	glTranslatef(0.0f, 0.0f, -5.0f);
+	glPushMatrix();
+	glRotatef(30.0f, 0.0f, 1.0f, 0.0f);
+	glBegin(GL_TRIANGLES);
+	glColor4ub(255, 0, 0, 255); glVertex3f(-0.5f, -0.25f, 0.0f);
+	glColor4ub(0, 0, 255, 255); glVertex3f(0.5f, -0.25f, 0.0f);
+	glColor4ub(0, 255, 0, 255); glVertex3f(0.0f, 0.5f, 0.0f);
+	glEnd();
+	glPopMatrix();
+	glPopMatrix();
+
+	glPushMatrix();
+	glRotatef(30.0f, 0.0f, 1.0f, 0.0f);
+	glPushMatrix();
+	glTranslatef(0.0f, 0.0f, -5.0f);
+	glBegin(GL_TRIANGLES);
+	glColor4ub(255, 0, 0, 255); glVertex3f(-0.5f, -0.25f, 0.0f);
+	glColor4ub(0, 0, 255, 255); glVertex3f(0.5f, -0.25f, 0.0f);
+	glColor4ub(0, 255, 0, 255); glVertex3f(0.0f, 0.5f, 0.0f);
+	glEnd();
+	glPopMatrix();
+	glPopMatrix();
+	
+四、投影矩阵， 模型矩阵（矩阵变换在物体的局部坐标系下完成）
+
+五、摄像机位置
+		gluLookAt(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f); //脑袋位置， 眼睛看的视点， 从头顶发出去的方向向量
+
+
+

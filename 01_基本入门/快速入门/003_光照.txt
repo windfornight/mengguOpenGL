@@ -1,0 +1,30 @@
+	一、八盏灯，环境光反射，漫反射，镜面反射
+		glEnable(GL_LIGHTING);
+		glEnable(GL_LIGHT0); //启用一盏灯， GL_LIGHT0 - GL_LIGHT7
+		float lightPos[] = { 0.0f, 0.0f, 1.0f, 0.0f }; //齐次坐标， 方向光， 点光源
+		glLightfv(GL_LIGHT0, GL_POSITION, lightPos);  //设置灯位置
+
+		float whiteColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+		float ambientMat[] = { 0.07f, 0.07f, 0.07f, 1.0f };
+		float diffuseMat[] = { 0.4f, 0.4f, 0.4f, 1.0f };
+		float specularMat[] = { 0.9f, 0.9f, 0.9f, 1.0f };
+		float blackColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+
+		glLightfv(GL_LIGHT0, GL_AMBIENT, whiteColor);  //计算公式(r, g, b, a)* (mr,mg,mb,ma) = (r*mr, g*mg, b*mb, a*ma)
+		glMaterialfv(GL_FRONT, GL_AMBIENT, ambientMat);  //环境光
+
+		glLightfv(GL_LIGHT0, GL_DIFFUSE, whiteColor);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuseMat);  //漫反射
+
+		glLightfv(GL_LIGHT0, GL_SPECULAR, whiteColor);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, specularMat); //镜面反射
+		
+		glBegin(GL_QUADS);
+		glColor4ub(255, 255, 255, 255);
+		glVertex3f(-0.5f, -0.2f, -0.5f);
+		glVertex3f(0.5f, -0.2f, -0.5f);
+		glVertex3f(0.5f, -0.2f, -1.0f);
+		glVertex3f(-0.5f, -0.2f, -1.0f);
+		glEnd();
+		
+	二、方向光， 点光源，聚光灯（聚光角度，范围角度）

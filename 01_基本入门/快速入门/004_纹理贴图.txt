@@ -1,0 +1,95 @@
+一、纹理坐标  0, 0 ----> 1, 1
+
+二、创建纹理
+	unsigned  char* LoadFileContent(const char* path, int& filesize)
+	{
+		unsigned char* fileContent = nullptr;
+		filesize = 0;
+		FILE* pFile = fopen(path, "rb");
+		if (pFile)
+		{
+			fseek(pFile, 0, SEEK_END);
+			int nLen = ftell(pFile);
+			if (nLen > 0)
+			{
+				rewind(pFile);
+				fileContent = new unsigned char[nLen + 1];
+				fread(fileContent, sizeof(unsigned char), nLen, pFile);
+				fileContent[nLen] = '\0';
+				filesize = nLen;
+			}
+			fclose(pFile);
+		}
+		return fileContent;
+	}
+
+	unsigned char* DecodeBMP(unsigned char* bmpFileData, int& width, int& height)
+	{ 
+		if (0x4D42 == *(unsigned short*)bmpFileData)
+		{
+			int pixelDataOffset = *((int *)(bmpFileData + 10));
+			width = *((int*)(bmpFileData + 18));
+			height = *((int*)(bmpFileData + 22));
+			unsigned char* pixelData = bmpFileData + pixelDataOffset;
+			for (int i = 0; i < width * height * 3; i += 3)  //bgr->rgb(opengl)
+			{
+				unsigned char temp = pixelData[i];
+				pixelData[i] = pixelData[i + 2];
+				pixelData[i + 2] = temp;
+			}
+			return pixelData;
+		}
+		return nullptr;
+	}
+
+	GLuint CreateTexture2D(unsigned char* pixelData, int width, int height, GLenum type)
+	{
+		GLuint texture;
+		glGenTextures(1, &texture); //创建一个纹理描述符
+		glBindTexture(GL_TEXTURE_2D, texture);  //绑定当前纹理
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);  //GL_NEAREST
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);  //GL_REPEAT
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+		glTexImage2D(GL_TEXTURE_2D, 0, type, width, height, 0, type, GL_UNSIGNED_BYTE, pixelData); //第二个0的具体意义
+		glBindTexture(GL_TEXTURE_2D, 0); //解绑，防止之后的操作会改变上述纹理
+		return texture;
+	}
+
+	GLuint CreateTexture2DFromBMP(const char* bmpPath)
+	{
+		int nFileSize = 0;
+		unsigned char* bmpFileContent = LoadFileContent(bmpPath, nFileSize);
+		if (bmpFileContent == nullptr)
+		{
+			return 0;
+		}
+		int bmpWidth = 0, bmpHeight = 0;
+		unsigned char* pixelData = DecodeBMP(bmpFileContent, bmpWidth, bmpHeight);
+		if (bmpWidth == 0)
+		{
+			delete bmpFileContent;
+			return 0;
+		}
+		GLuint texture = CreateTexture2D(pixelData, bmpWidth, bmpHeight, GL_RGB);
+		delete bmpFileContent;
+		return texture;
+	}
+	
+	三、使用纹理贴图
+		texture = CreateTexture2DFromBMP("Res\\test.bmp");
+	
+	
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glBegin(GL_QUADS);
+		glColor4ub(255, 255, 255, 255);
+		glTexCoord2f(0.0f, 0.0f);  //纹理坐标
+		glVertex3f(-0.1f, -0.1f, -0.4f);
+		glTexCoord2f(1.0f, 0.0f);
+		glVertex3f(0.1f, -0.1f, -0.4f);
+		glTexCoord2f(1.0f, 1.0f);
+		glVertex3f(0.1f, 0.1f, -0.4f);
+		glTexCoord2f(0.0f, 1.0f);
+		glVertex3f(-0.1f, 0.1f, -0.4f);
+		glEnd();
