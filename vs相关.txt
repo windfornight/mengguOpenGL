@@ -1,2 +1,5 @@
 一、win application 控制台打印
 	项目属性->生成事件->生成后事件->命令行 editbin /subsystem:console $(OutDir)$(ProjectName).exe
+	
+二、程序类型修改
+	项目属性->链接器->系统->子程序
