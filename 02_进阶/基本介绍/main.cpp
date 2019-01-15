@@ -56,6 +56,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	HGLRC rc = wglCreateContext(dc);
 	wglMakeCurrent(dc, rc);
 	glewInit();
+	Init();
 	SetViewPortSize(1280.0f, 720.0f);
 	ShowWindow(hwnd, SW_SHOW);
 	UpdateWindow(hwnd);
@@ -69,9 +70,11 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			{
 				break;
 			}
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
 		}
-		//Draw();
-		//SwapBuffers(dc);
+		Draw();
+		SwapBuffers(dc);
 	}
 
 	return 0;
