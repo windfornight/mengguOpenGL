@@ -10,9 +10,9 @@ glm::mat4 modelMatrix, viewMatrix, projectionMatrix;
 void Init()
 {
 	float data[] = {
-		-0.2f, -0.2f, 0.0f, 1.0f,
-		0.2f, -0.2f, 0.0f, 1.0f,
-		0.0f, 0.2f, 0.0f, 1.0f
+		-1.0f, -1.0f, -10.0f, 1.0f,
+		1.0f, -1.0f, -10.0f, 1.0f,
+		0.0f, 1.0f, -10.0f, 1.0f
 	};
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -63,7 +63,5 @@ void Draw()
 	
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glUseProgram(0);
-
-
 
 }
