@@ -3,6 +3,7 @@
 
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glew32.lib")
+#pragma comment(lib, "winmm.lib")  //timeGetTime
 
 LRESULT CALLBACK GLWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -86,9 +87,17 @@ LRESULT CALLBACK GLWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	switch (msg)
 	{
 	case WM_CLOSE:
-		printf("this==========");
 		PostQuitMessage(0);
 		return 0;
 	}
 	return DefWindowProc(hwnd, msg, wParam, lParam);
+}
+
+float GetFrameTime()
+{
+	static unsigned long lastTime = 0, timeSinceComputerStart = 0;
+	timeSinceComputerStart = timeGetTime();
+	unsigned long frameTime = (lastTime == 0) ? 0 : timeSinceComputerStart - lastTime;
+	lastTime = timeSinceComputerStart;
+	return float(frameTime) / 1000.0f;
 }
