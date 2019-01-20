@@ -11,10 +11,10 @@ void Ground::Init()
 		{
 			int offset = (x + z * 20) * 4;
 			float xStart = x * 10.0f - 100.0f;
-			mVertexBuffer->SetPosition(offset, xStart, -1.0f, zStart);
-			mVertexBuffer->SetPosition(offset + 1, xStart + 10.0f, -1.0f, zStart);
-			mVertexBuffer->SetPosition(offset + 2, xStart + 10.0f, -1.0f, zStart + 10.0f);
-			mVertexBuffer->SetPosition(offset + 3, xStart, -1.0f, zStart + 10.0f);
+			mVertexBuffer->SetPosition(offset, xStart + 10.0f, -1.0f, zStart);
+			mVertexBuffer->SetPosition(offset + 1, xStart + 10.0f, -1.0f, zStart - 10.0f);
+			mVertexBuffer->SetPosition(offset + 2, xStart, -1.0f, zStart);
+			mVertexBuffer->SetPosition(offset + 3, xStart, -1.0f, zStart - 10.0f);
 			mVertexBuffer->SetNormal(offset, 0.0f, 1.0f, 0.0f);
 			mVertexBuffer->SetNormal(offset + 1, 0.0f, 1.0f, 0.0f);
 			mVertexBuffer->SetNormal(offset + 2, 0.0f, 1.0f, 0.0f);
