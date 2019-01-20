@@ -39,6 +39,14 @@ void Shader::Bind(float *M, float *V, float *P)
 	glUniformMatrix4fv(mViewMatrixLocation, 1, GL_FALSE, V);
 	glUniformMatrix4fv(mProjectionMatrixLocation, 1, GL_FALSE, P);
 
+	int iIndex = 0;
+	for (auto iter = mUniformTextures.begin(); iter != mUniformTextures.end(); ++iter)
+	{
+		glActiveTexture(GL_TEXTURE0 + iIndex);  //
+		glBindTexture(GL_TEXTURE_2D, iter->second->mTexture);
+		glUniform1i(iter->second->mLocation, iIndex++);  //
+	}
+
 	glEnableVertexAttribArray(mPositionLocation);
 	glVertexAttribPointer(mPositionLocation, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);  //数据来源?  GPU bindBuffer
 	glEnableVertexAttribArray(mColorLocation);
@@ -48,4 +56,25 @@ void Shader::Bind(float *M, float *V, float *P)
 	glEnableVertexAttribArray(mNormalLocation);
 	glVertexAttribPointer(mNormalLocation, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float) * 12));
 
+}
+
+void Shader::SetTexture(const char *name, const char *imagePath)
+{
+	auto iter = mUniformTextures.find(name);
+	if (iter == mUniformTextures.end())
+	{
+		GLint location = glGetUniformLocation(mProgram, name);
+		if (location != -1)
+		{
+			UniformTexture *t = new UniformTexture;
+			t->mLocation = location;
+			t->mTexture = CreateTexture2DFromBMP(imagePath);
+			mUniformTextures.insert(std::pair<std::string, UniformTexture*>(name, t));
+		}
+	}
+	else
+	{
+		glDeleteTextures(1, &iter->second->mTexture);
+		iter->second->mTexture = CreateTexture2DFromBMP(imagePath);
+	}
 }
