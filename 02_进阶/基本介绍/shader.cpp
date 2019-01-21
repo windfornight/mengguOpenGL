@@ -42,10 +42,16 @@ void Shader::Bind(float *M, float *V, float *P)
 	int iIndex = 0;
 	for (auto iter = mUniformTextures.begin(); iter != mUniformTextures.end(); ++iter)
 	{
-		glActiveTexture(GL_TEXTURE0 + iIndex);  //
+		glActiveTexture(GL_TEXTURE0 + iIndex);  //0-31个纹理
 		glBindTexture(GL_TEXTURE_2D, iter->second->mTexture);
 		glUniform1i(iter->second->mLocation, iIndex++);  //
 	}
+
+	for (auto iter = mUniformVec4s.begin(); iter != mUniformVec4s.end(); ++iter)
+	{
+		glUniform4fv(iter->second->mLocation, 1, iter->second->v); //
+	}
+
 
 	glEnableVertexAttribArray(mPositionLocation);
 	glVertexAttribPointer(mPositionLocation, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);  //数据来源?  GPU bindBuffer
@@ -77,4 +83,31 @@ void Shader::SetTexture(const char *name, const char *imagePath)
 		glDeleteTextures(1, &iter->second->mTexture);
 		iter->second->mTexture = CreateTexture2DFromBMP(imagePath);
 	}
+}
+
+void Shader::SetVec4(const char *name, float x, float y, float z, float w)
+{
+	auto iter = mUniformVec4s.find(name);
+	if (iter == mUniformVec4s.end())
+	{
+		GLint location = glGetUniformLocation(mProgram, name);
+		if (location != -1)
+		{
+			UniformVector4f *v = new UniformVector4f;
+			v->v[0] = x;
+			v->v[1] = y;
+			v->v[2] = z;
+			v->v[3] = w;
+			v->mLocation = location;
+			mUniformVec4s.insert(std::pair<std::string, UniformVector4f*>(name, v));
+		}
+	}
+	else
+	{
+		iter->second->v[0] = x;
+		iter->second->v[1] = y;
+		iter->second->v[2] = z;
+		iter->second->v[3] = w;
+	}
+
 }

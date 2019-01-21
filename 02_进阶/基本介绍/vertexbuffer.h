@@ -12,6 +12,7 @@ struct Vertex
 
 class VertexBuffer
 {
+public:
 	Vertex *mVertexes;
 	int mVertexCount;
 	GLuint mVBO;
