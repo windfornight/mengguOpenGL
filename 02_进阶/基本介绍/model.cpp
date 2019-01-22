@@ -111,7 +111,7 @@ void Model::Init(const char *modelPath)
 	mShader->SetVec4("U_LightDiffuse", 1.0f, 1.0f, 1.0f, 1.0f);
 	mShader->SetVec4("U_LightSpecular", 1.0f, 1.0f, 1.0f, 1.0f);
 	mShader->SetVec4("U_CameraPos", 0.0f, 0.0f, 0.0f, 0.0f);
-	mShader->SetVec4("U_LightOpt", 32.0f, 0.0f, 0.0f, 0.0f);
+	mShader->SetVec4("U_LightOpt", 32.0f, 0.0f, 0.0f, 1.0f);
 	SetAmbientMaterial(0.1f, 0.1f, 0.1f, 1.0f);
 	SetDiffuseMaterial(0.6f, 0.6f, 0.6f, 1.0f);
 	SetSpecularMaterial(1.0f, 1.0f, 1.0f, 1.0f);
@@ -146,4 +146,9 @@ void Model::SetDiffuseMaterial(float r, float g, float b, float a)
 void Model::SetSpecularMaterial(float r, float g, float b, float a)
 {
 	mShader->SetVec4("U_SpecularMaterial", r, g, b, a);
+}
+
+void Model::SetTexture(const char *imagePath)
+{
+	mShader->SetTexture("U_Texture", imagePath);
 }

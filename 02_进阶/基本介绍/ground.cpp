@@ -49,5 +49,5 @@ void Ground::Draw(glm::mat4 &viewMatrix, glm::mat4 &projectionMatrix)
 		glDrawArrays(GL_TRIANGLE_STRIP, i * 4, 4);
 	}
 	mVertexBuffer->Unbind();
-	glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_DEPTH_TEST);
 }
