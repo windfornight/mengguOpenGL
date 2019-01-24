@@ -58,7 +58,7 @@ void SkyBox::InitLeft(const char *imageDir)
 	memset(temp, 0, 256);
 	strcpy(temp, imageDir);
 	strcat(temp, "left.bmp");
-	mShader[2].SetTexture("U_Testure", temp);
+	mShader[2].SetTexture("U_Texture", temp);
 	mVertexBuffer[2].SetSize(4);
 	mVertexBuffer[2].SetPosition(0, -0.5f, -0.5f, 0.5f);
 	mVertexBuffer[2].SetTexcoord(0, 0.0f, 0.0f);
@@ -93,6 +93,7 @@ void SkyBox::InitTop(const char *imageDir)
 {
 	mShader[4].Init("Res/skybox.vs", "Res/skybox.fs");
 	char temp[256];
+	memset(temp, 0, 256);
 	strcpy(temp, imageDir);
 	strcat(temp, "top.bmp");
 	mShader[4].SetTexture("U_Texture", temp);
@@ -104,7 +105,7 @@ void SkyBox::InitTop(const char *imageDir)
 	mVertexBuffer[4].SetPosition(2, -0.5f, 0.5f, 0.5f);
 	mVertexBuffer[4].SetTexcoord(2, 0.0f, 1.0f);
 	mVertexBuffer[4].SetPosition(3, 0.5f, 0.5f, 0.5f);
-	mVertexBuffer[4].SetTexcoord(4, 1.0f, 1.0f);
+	mVertexBuffer[4].SetTexcoord(3, 1.0f, 1.0f);
 }
 
 void SkyBox::InitBottom(const char *imageDir)
