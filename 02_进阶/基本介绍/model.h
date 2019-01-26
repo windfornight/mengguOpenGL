@@ -5,6 +5,7 @@
 
 class Model
 {
+public:
 	VertexBuffer *mVertexBuffer;
 	Shader *mShader;
 	glm::mat4 mModelMatrix;

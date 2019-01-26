@@ -10,3 +10,4 @@ unsigned char* DecodeBMP(unsigned char* bmpFileData, int &width, int &height);
 GLuint CreateTexture2D(unsigned char* pixelData, int width, int height, GLenum type);
 GLuint CreateTexture2DFromBMP(const char *bmpPath);
 GLuint CreateBufferObject(GLenum bufferType, GLsizeiptr size, GLenum usage, void *data = nullptr);
+GLuint CreateProcedureTexture(int size);

@@ -111,3 +111,25 @@ void Shader::SetVec4(const char *name, float x, float y, float z, float w)
 	}
 
 }
+
+
+void Shader::SetTexture(const char *name, GLuint texture)
+{
+	auto iter = mUniformTextures.find(name);
+	if (iter == mUniformTextures.end())
+	{
+		GLint location = glGetUniformLocation(mProgram, name);
+		if (location != -1)
+		{
+			UniformTexture *t = new UniformTexture;
+			t->mLocation = location;
+			t->mTexture = texture;
+			mUniformTextures.insert(std::pair<std::string, UniformTexture*>(name, t));
+		}
+		else
+		{
+			glDeleteTextures(1, &iter->second->mTexture);
+			iter->second->mTexture = texture;
+		}
+	}
+}

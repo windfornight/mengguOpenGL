@@ -4,12 +4,14 @@
 #include "ground.h"
 #include "model.h"
 #include "skybox.h"
+#include "particlesystem.h"
 
 
 glm::mat4 modelMatrix, viewMatrix, projectionMatrix;
 Ground ground;
-Model model;
+Model model, niutou;
 SkyBox skybox;
+ParticleSystem ps;
 
 void Init()
 {
@@ -18,6 +20,10 @@ void Init()
 	model.SetTexture("Res/earth.bmp");
 	model.SetPosition(0.0f, 0.0f, -5.0f);
 	skybox.Init("Res/");
+	niutou.Init("Res/niutou.obj");
+	niutou.SetTexture("Res/niutou.bmp");
+	niutou.mModelMatrix = glm::translate(-0.5f, 0.0f, 4.0f) * glm::scale(0.05f, 0.05f, 0.05f);
+	ps.Init(0.0f, 0.0f, 0.0f);
 }
 
 void SetViewPortSize(float width, float height)
@@ -34,4 +40,7 @@ void Draw()
 	skybox.Draw(viewMatrix, projectionMatrix);
 	ground.Draw(viewMatrix, projectionMatrix);
 	model.Draw(viewMatrix, projectionMatrix);
+	niutou.Draw(viewMatrix, projectionMatrix);
+	ps.Update(frameTime);
+	ps.Draw(viewMatrix, projectionMatrix);
 }
