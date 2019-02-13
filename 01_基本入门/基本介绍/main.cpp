@@ -27,10 +27,10 @@ bool bRotateView = false;
 
 void RenderOneFrame(float deltaTime)
 {
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	camera.SwitchTo3D();
 	glLoadIdentity();
-
 	camera.Update(deltaTime);
 	glEnable(GL_TEXTURE_2D);
 	skybox.Draw(camera.mPos.x, camera.mPos.y, camera.mPos.z);
@@ -154,6 +154,9 @@ LRESULT CALLBACK GLWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	}
 	return DefWindowProc(hwnd, msg, wParam, lParam);
 }
+
+
+
 
 INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {

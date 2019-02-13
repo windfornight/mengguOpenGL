@@ -13,7 +13,7 @@ unsigned char* LoadFileContent(const char *filePath)
 			rewind(pFile);
 			fileContent = new unsigned char[nLen + 1];
 			fread(fileContent, sizeof(unsigned char), nLen, pFile);
-			fileContent[nLen + 1] = '\0';
+			fileContent[nLen] = '\0';	//C++ index 从0开始，切记
 		}
 		fclose(pFile);
 	}

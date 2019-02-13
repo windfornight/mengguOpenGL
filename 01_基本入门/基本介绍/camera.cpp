@@ -7,6 +7,7 @@
 
 Camera::Camera() :mPos(0.0f, 0.0f, 5.0f),
 mViewCenter(0.0f, 0.0f, 4.0f),
+mUp(0.0f, 1.0f, 0.0f),
 mbMoveLeft(false),
 mbMoveRight(false),
 mbMoveForward(false),
