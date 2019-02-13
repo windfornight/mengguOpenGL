@@ -61,6 +61,7 @@ void Camera::Update(float deltaTime)
 		Vector3f rightDirection = viewDirection ^ mUp;
 		rightDirection.Normalize();
 		mPos = mPos + rightDirection * moveSpeed * deltaTime * (-1.0f);
+		mViewCenter = mViewCenter + rightDirection * moveSpeed*deltaTime*-1.0f;
 
 	}
 	if (mbMoveRight)
