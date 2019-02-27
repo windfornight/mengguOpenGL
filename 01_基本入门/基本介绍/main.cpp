@@ -64,8 +64,7 @@ LRESULT CALLBACK GLWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 		int x = LOWORD(lParam) - camera.mViewPortWidth / 2;
 		int y = camera.mViewPortHeight / 2 - HIWORD(lParam);
-		headButton->OnTouchEnd(x, y);
-		headButton->ResetState();
+		headButton->OnTouchBegin(x, y);
 
 	}
 	break;
@@ -133,6 +132,9 @@ LRESULT CALLBACK GLWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_KEYUP:
 		switch (wParam)
 		{
+		case '2':  //[]()->void {printf("i've been clicked\n"); }
+			SaveScreenPixelToFile(200, 200, []()->void {printf("capturephoto"); }, "photo.bmp");  //过小不成功
+			break;
 		case 'A':
 			camera.mbMoveLeft = false;
 			break;
