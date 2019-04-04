@@ -124,7 +124,7 @@ INT WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		glUniformMatrix4fv(NMLocation, 1, GL_FALSE, glm::value_ptr(normalMatrix));
 
 		glBindTexture(GL_TEXTURE_2D, mainTexture);
-		glUniform1i(texcoordLocation, 0);
+		glUniform1i(textureLocation, 0);
 
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glEnableVertexAttribArray(posLocation);
